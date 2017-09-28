@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_register_success">
+        <observer name="engage_customer_account_createPost" instance="Userengage\Engage\Observer\CustomerRegisterSuccess" />
+    </event>
+    <event name="checkout_cart_product_add_after">
+        <observer name="engage_product_add" instance="Userengage\Engage\Observer\ProductAdd" />
+    </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="checkout_controller_success_action" instance="Userengage\Engage\Observer\AfterPlaceOrder"  />
+    </event>
+</config>

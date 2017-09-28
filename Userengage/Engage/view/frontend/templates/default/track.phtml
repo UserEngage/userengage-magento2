@@ -1,0 +1,22 @@
+<?php
+/**
+ * Baz view template
+ *
+ * @var $block \Foo\Bar\Block\Baz
+ */
+
+?>
+
+<script data-cfasync="false" type="text/javascript">
+  window.civchat = {
+    apiKey: '<?php echo $block->getKey(); ?>'
+    <?php echo $block->getUserData(); ?>
+  }
+  
+</script>
+ 
+<script data-cfasync="false" type="text/javascript" src="https://widget.userengage.com/widget.js"></script>
+
+
+ 
+
