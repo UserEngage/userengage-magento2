@@ -2,7 +2,7 @@
 
 ## First steps
 
-Copy the module folder to <Magento file system owner>/app/code/
+Copy the module folder to &lt;Magento file system owner&gt;/app/code/
 
 ## Module enable
 
