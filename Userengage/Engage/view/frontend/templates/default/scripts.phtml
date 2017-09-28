@@ -1,9 +1,5 @@
 <?php
-//print_r($_SESSION);
-
-
  if (isset($_SESSION["addproduct"])) {
-  
 ?>
 <?php
  $output = '<script type="text/javascript"  data-cfasync="false">';
@@ -11,63 +7,24 @@
     $output .= 'var timecheck =  setInterval(function() { if (typeof userengage == "function") { ';
     $output .= "userengage('event.addToCart', {" .
                "'sku': '" . $_SESSION["productData"]["sku"] . 
-//               "','category': '" . $_SESSION["productData"]["category"] . 
                "','name': '" . $_SESSION["productData"]["name"] . 
                "','price': '" . $_SESSION["productData"]["price"] . 
                "','quantity': '" . $_SESSION["productData"]["quantity"] . 
-//               "','product_url': '" . $_SESSION["productData"]["product_url"] . 
-//               "','image_url': '" . $_SESSION["productData"]["image_url"] . 
                "' });";
-    
     $output .= ' clearInterval(timecheck);} },500);';
     $output .= ' </script>';
     echo $output;
-
 }
 unset($_SESSION["addproduct"]);
 unset($_SESSION["productData"]);
+
 if (isset($_SESSION["userRegistered"])) {
     
     $om = \Magento\Framework\App\ObjectManager::getInstance();  
 $customerSession = $om->get('Magento\Customer\Model\Session'); 
 
 $customerData = $customerSession->getCustomer()->getData();
-
-//    Array
-//(
-//    [entity_id] => 8
-//    [website_id] => 1
-//    [email] => lorrerm@boem.pl
-//    [group_id] => 1
-//    [increment_id] => 
-//    [store_id] => 1
-//    [created_at] => 2017-09-21 21:13:53
-//    [updated_at] => 2017-09-21 21:13:54
-//    [is_active] => 1
-//    [disable_auto_group_change] => 0
-//    [created_in] => Default Store View
-//    [prefix] => 
-//    [firstname] => Łukasz
-//    [middlename] => 
-//    [lastname] => Sadowski
-//    [suffix] => 
-//    [dob] => 
-//    [password_hash] => 079da9df54d8daedd2c0289ac4abe4d37dec113d3cf564dcca2b7458e542f661:TZvQwdwtoBP4ruI3GMzZx2p87Ur7IDgU:1
-//    [rp_token] => acecd96d9b2a3772831e1eb9c0390a95
-//    [rp_token_created_at] => 2017-09-21 21:13:54
-//    [default_billing] => 
-//    [default_shipping] => 
-//    [taxvat] => 
-//    [confirmation] => 
-//    [gender] => 
-//    [failures_num] => 
-//    [first_failure] => 
-//    [lock_expires] => 
-//)
-
-
     $output = '<script type="text/javascript"  data-cfasync="false">';
-  
     $output .= 'var timecheck =  setInterval(function() { if (typeof userengage == "function") { ';
     $output .= "userengage('event.registration', {" .
                "'id': '" . $customerData["entity_id"] . 
@@ -81,59 +38,21 @@ $customerData = $customerSession->getCustomer()->getData();
     unset($_SESSION["userRegistered"]);
 }
 
-
 if (isset($_SESSION["orderCreated"])) {
 	$orderId = $_SESSION["checkout"]["last_order_id"];
 	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$order = $objectManager->create('Magento\Sales\Model\Order')->load($orderId);
-
-		// $data = '';
-		// $totall = $order->getGrandTotal();
-		// $shippingAddress = $order->getShippingAddress()->getData();
-		// $address = trim(preg_replace('/\s\s+/', ' ', $shippingAddress["street"]));
-		
-		
-		 $data =  "'id': '".$order->getIncrementId() ."'," .
-              "'shipping': '" . $order->getShippingAmount() ."'," .
-              "'tax': '" . $order->getTaxAmount() . "'," .
-              "'coupon': '" . $order->getCouponCode() . "'," .
-              "'revenue': '" . $order->getGrandTotal() . "'";
-              // "','email': '".$shippingAddress["email"]."','telephone': '".$shippingAddress["telephone"]."','country_id': '".$shippingAddress["country_id"]."','name': '".trim($shippingAddress["firstname"])." ".trim($shippingAddress["lastname"])."','postcode': '".$shippingAddress["postcode"]."','region': '".$shippingAddress["region"]."','street': '".$address."','orderTotal':'".$totall."'";
-
-	 // $itemCollection = $order->getItemsCollection();
-  //          foreach ($itemCollection as $item) {
-  //          // $options = $item->getProduct()->getTypeInstance(true)->getOrderOptions($item->getProduct());
-  //           //$customOptions = $options['options'];
-  //           $pId = $item->getId();
-  //           $pSku = $item->getSku();
-  //           $pName = $item->getName();
-  //           $quantity = $item->getQty();
-  //           $pPrice = $item->getProduct()->getPrice();
-  //           $data .= ",'Product_name':'".$pName."','Product_quantity':'".$quantity."','Product_price':'".$pPrice."'";
-	   
-  //        /*   if (!empty($customOptions)) {
-  //               foreach ($customOptions as $option) {
-  //                   $optionTitle = $option['label'];
-  //                  $optionId = $option['option_id'];
-  //                   $optionType = $option['type'];
-  //                   $optionValue = $option['value'];
-  //                   $data .= ',"'.$optionTitle.'":"'.$optionValue.'",';
-  //               }
-  //           }*/
-  //   } 
-
-
-	
-
+	$order = $objectManager->create('Magento\Sales\Model\Order')->load($orderId); 
+    $data = "'id': '".$order->getIncrementId() ."'," .
+            "'shipping': '" . $order->getShippingAmount() ."'," .
+            "'tax': '" . $order->getTaxAmount() . "'," .
+            "'coupon': '" . $order->getCouponCode() . "'," .
+            "'revenue': '" . $order->getGrandTotal() . "'";
 	$output = ' <script type="text/javascript"  data-cfasync="false">';	   	
-	 $output .= 'var timecheck =  setInterval(function() { if (typeof userengage == "function") { ';
+    $output .= 'var timecheck =  setInterval(function() { if (typeof userengage == "function") { ';
     $output .= "userengage('event.purchase', {".$data."});";
     $output .= ' clearInterval(timecheck);} },500);';
     $output .= ' </script>';
     echo $output;
-
-        
- unset($_SESSION["orderCreated"]);   
+    unset($_SESSION["orderCreated"]);   
 }
-
 ?>
